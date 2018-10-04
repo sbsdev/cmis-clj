@@ -53,8 +53,6 @@
 (defn extract-ebook-numbers
   ([user password]
    (extract-ebook-numbers user password default-query default-url default-repo-id))
-  ([user password query]
-   (extract-ebook-numbers user password query default-url default-repo-id))
   ([user password query url repo-id]
    (let [factory (SessionFactoryFinder/find)
          params (HashMap. {SessionParameter/USER user
@@ -78,8 +76,6 @@
 (defn extract-content
   ([user password]
    (extract-content user password default-query default-url default-repo-id))
-  ([user password query]
-   (extract-content user password query default-url default-repo-id))
   ([user password  query url repo-id]
    (let [factory (SessionFactoryFinder/find)
          params (HashMap. {SessionParameter/USER user
