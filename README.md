@@ -10,6 +10,13 @@ Start a REPL and use it from there.
 You might want to adapt the default values that are hard coded at the
 top of `core.clj`.
 
+# References
+
+- [Apache Chemistry CMIS Code Samples](https://chemistry.apache.org/docs/cmis-samples/index.html)
+- [OpenCMIS Client API Developer's Guide](https://chemistry.apache.org/java/developing/guide.html)
+- [CMIS Query Language](https://community.alfresco.com/docs/DOC-5898-cmis-query-language)
+- [Apache Chemistry CMIS Workbench](https://chemistry.apache.org/java/developing/tools/dev-tools-workbench.html)
+
 ## License
 
 Copyright © 2018 Swiss Library for the Blind, Visually Impaired and Print Disabled.
