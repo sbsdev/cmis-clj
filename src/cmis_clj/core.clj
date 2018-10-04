@@ -13,7 +13,7 @@
 
 (def default-url "http://pam01.sbszh.ch/alfresco/cmisatom")
 (def default-repo-id "884e10c7-1b45-41ab-b9ff-58e9fb84d688")
-(def default-query "SELECT * FROM sbs:daisyFile WHERE sbs:pKontrolleEB IS NOT NULL AND CONTAINS('PATH:\"/app:company_home/cm:Produktion/cm:Archiv/cm:Bücher//*\"')")
+(def default-query "SELECT * FROM sbs:daisyFile WHERE sbs:pKontrolleEB LIKE '20%' AND CONTAINS('PATH:\"/app:company_home/cm:Produktion/cm:Archiv/cm:Bücher//*\"')")
 
 (defn to-map [result]
   (->>
