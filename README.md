@@ -7,6 +7,13 @@ A quick hack to export documents from a content store via
 
 Start a REPL and use it from there.
 
+``` shell
+(with-open [writer (io/writer "export/ebooks.csv")]
+  (write-ebook-numbers writer (extract-ebook-numbers user password)))
+
+(extract-content user password)
+```
+
 You might want to adapt the default values that are hard coded at the
 top of `core.clj`.
 
