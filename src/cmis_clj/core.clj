@@ -76,7 +76,7 @@
 (defn extract-content
   ([user password]
    (extract-content user password default-query default-url default-repo-id))
-  ([user password  query url repo-id]
+  ([user password query url repo-id]
    (let [factory (SessionFactoryFinder/find)
          params (HashMap. {SessionParameter/USER user
                            SessionParameter/PASSWORD password
