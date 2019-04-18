@@ -7,11 +7,12 @@ A quick hack to export documents from a content store via
 
 Start a REPL and use it from there.
 
-``` shell
+``` clojure
+(require '[clojure.java.io :as io])
 (with-open [writer (io/writer "export/ebooks.csv")]
-  (write-ebook-numbers writer (extract-ebook-numbers user password)))
+  (write-ebook-numbers writer (extract-ebook-numbers "username" "password")))
 
-(extract-content user password)
+(extract-content "username" "password")
 ```
 
 You might want to adapt the default values that are hard coded at the
