@@ -36,11 +36,37 @@
      obj-type (= obj-type "F:sbs:produkt")
      product-no (string/starts-with? product-no "EB"))))
 
+(defn daisy-file? [document]
+  (let [obj-type (property document "cmis:objectTypeId")]
+    (= obj-type "D:sbs:daisyFile")))
+
 (defn ebook-number [document]
   (let [parent (first (.getParents document))
         children (.getChildren parent)
         ebook (first (filter ebook? children))]
     (some-> ebook (property "sbs:pProduktNo"))))
+
+(defn- kontrolle-to-iso8601 [s]
+  (if-let [date (re-find #"\d{2}\.\d{2}\.\d{4}" s)]
+    (let [input-format (java.text.SimpleDateFormat. "dd.MM.yyyy")
+          iso-format (java.text.SimpleDateFormat. "yyyy-MM-dd")]
+      (.format iso-format (.parse input-format s)))
+    s))
+
+(defn ebook-review-date [document]
+  (let [parent (first (.getParents document))
+        children (.getChildren parent)
+        daisy-xml (first (filter daisy-file? children))]
+    (some-> daisy-xml (property "sbs:pKontrolleEB") kontrolle-to-iso8601)))
+
+(defn- to-iso8601 [date]
+  (.format (java.text.SimpleDateFormat. "yyy-MM-dd") date))
+
+(defn ebook-last-modification-date [document]
+  (let [parent (first (.getParents document))
+        children (.getChildren parent)
+        ebook (first (filter ebook? children))]
+    (some-> ebook (property "cmis:lastModificationDate") .getTime to-iso8601)))
 
 (defn isbn [document]
   (let [parent (first (.getParents document))]
@@ -67,8 +93,10 @@
              ebook (ebook-number doc)
              isbn (isbn doc)
              id (.getId doc)
-             dc-identifier (dc-identifier (some-> doc .getContentStream .getStream))]
-         [ebook isbn dc-identifier id])))))
+             dc-identifier (dc-identifier (some-> doc .getContentStream .getStream))
+             review-date (ebook-review-date doc)
+             last-modification-date (ebook-last-modification-date doc)]
+         [ebook isbn dc-identifier id review-date last-modification-date])))))
 
 (defn write-ebook-numbers [writer data]
   (csv/write-csv writer data))
